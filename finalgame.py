@@ -6,7 +6,8 @@ import random
 def determine_winner(user_choice):
     global user_wins, computer_wins, draws, games_played
     computer_choice = random.randint(0, 2)
-    computer_label.config(text="Computer: " + options[computer_choice])
+    computer_label.config(image=choice_images[computer_choice])
+    computer_label.image = choice_images[computer_choice]
 
     if user_choice == computer_choice:
         result_label.config(text="It's a Draw", fg="blue")
@@ -27,7 +28,8 @@ def update_scoreboard():
 
 # Function to handle button clicks
 def button_click(choice):
-    user_label.config(text="You: " + options[choice])
+    user_label.config(image=choice_images[choice])
+    user_label.image = choice_images[choice]
     determine_winner(choice)
 
 # Function to reset the scores
@@ -45,7 +47,10 @@ root.title("Rock Paper Scissors")
 root.configure(bg="lightblue")
 
 # Options
-options = ["Rock", "Paper", "Scissors"]
+options = ["rock.png", "paper.png", "scissors.png"]
+
+# Load images
+choice_images = [ImageTk.PhotoImage(Image.open(option)) for option in options]
 
 # Labels
 scoreboard_label = tk.Label(root, text="", font=("Helvetica", 12), bg="lightblue", fg="black")
@@ -66,7 +71,7 @@ buttons_frame.pack()
 
 buttons = []
 for i, option in enumerate(options):
-    button = tk.Button(buttons_frame, text=option, font=("Helvetica", 12), width=10, command=lambda i=i: button_click(i))
+    button = tk.Button(buttons_frame, text=option.capitalize(), font=("Helvetica", 12), width=10, command=lambda i=i: button_click(i))
     button.pack(side=tk.LEFT, padx=10, pady=10)
     buttons.append(button)
 
